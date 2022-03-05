@@ -8,9 +8,9 @@ const Button = ({ handleClick, text }) => (
 )
 
 const StatisticLine = ({ label, value, perc }) => (
-  <p>
-    {value} {perc ? '%' : ''} {label}
-  </p>
+  <tr>
+    <td>{label}</td><td>{value} {perc ? '%' : ''}</td>
+  </tr>
 )
 
 // a proper place to define a component
@@ -27,14 +27,16 @@ const Statistics = ({ statistics }) => {
     <div>
       <h1>Statistics</h1>
       {totalFeedback ?
-        <div>
-          <StatisticLine label={'good'} value={good} />
-          <StatisticLine label={'neutral'} value={neutral} />
-          <StatisticLine label={'bad'} value={bad} />
-          <StatisticLine label={'total'} value={totalFeedback} />
-          <StatisticLine label={'average'} value={average} />
-          <StatisticLine label={'positive'} value={percPositive} perc={'true'} />
-        </div>
+        <table>
+          <tbody>
+            <StatisticLine label={'good'} value={good} />
+            <StatisticLine label={'neutral'} value={neutral} />
+            <StatisticLine label={'bad'} value={bad} />
+            <StatisticLine label={'total'} value={totalFeedback} />
+            <StatisticLine label={'average'} value={average} />
+            <StatisticLine label={'positive'} value={percPositive} perc={'true'} />
+          </tbody>
+        </table>
         : "No feedback given"}
 
     </div>
