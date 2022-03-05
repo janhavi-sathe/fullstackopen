@@ -7,66 +7,90 @@ const Button = ({ handleClick, text }) => (
   </button>
 )
 
-const Statistic = ({ label, value }) => (
+const Statistic = ({ label, value, perc }) => (
   <p>
-    {label} {value}
+    {value} {perc ? '%' : ''} {label}
   </p>
 )
 
+// a proper place to define a component
+const Statistics = ({ statistics }) => {
+  let good = statistics.good;
+  let neutral = statistics.neutral;
+  let bad = statistics.bad;
+  let totalFeedback = statistics.totalFeedback;
 
-const App = () => {
-  // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [totalFeedback, setTotalFeedback] = useState(0)
-  
   let average = ((good - bad) / totalFeedback).toPrecision(4);
   let percPositive = ((good / totalFeedback) * 100).toPrecision(4);
 
-  const updateStatistics = () => {
-    average = ((good - bad) / totalFeedback).toPrecision(4);
-    percPositive = ((good / totalFeedback) * 100).toPrecision(4);
-  }
-
-  const handleFeedbackButton = (handleClick) => {
-    handleClick();
-    // updateStatistics();
-  }
-
-  const onGoodClick = () => {
-    setGood(good + 1);
-    setTotalFeedback(totalFeedback + 1);
-    console.log('Clicked Good ', good);
-  }
-
-  const onNeutralClick = () => {
-    setNeutral(neutral + 1);
-    setTotalFeedback(totalFeedback + 1);
-    console.log('Clicked Neutral ', neutral);
-  }
-
-  const onBadClick = () => {
-    setBad(bad + 1);
-    setTotalFeedback(totalFeedback + 1);
-    console.log('Clicked Bad ', bad);
-  }
-
   return (
     <div>
-      <h1>give feedback</h1>
-      <div>
-        <Button handleClick={() => handleFeedbackButton(onGoodClick)} text={'good'} />
-        <Button handleClick={() => handleFeedbackButton(onNeutralClick)} text={'neutral'} />
-        <Button handleClick={() => handleFeedbackButton(onBadClick)} text={'bad'} />
-      </div>
-      <h1>statistics</h1>
+      <h1>Statistics</h1>
       <Statistic label={'good'} value={good} />
       <Statistic label={'neutral'} value={neutral} />
       <Statistic label={'bad'} value={bad} />
       <Statistic label={'total'} value={totalFeedback} />
       <Statistic label={'average'} value={average} />
-      <Statistic label={'positive %'} value={percPositive} />
+      <Statistic label={'positive'} value={percPositive} perc={'true'} />
+    </div>
+
+  )
+
+}
+
+
+
+const App = () => {
+  // save clicks of each button to its own state
+  const [statistics, setStatistics] = useState({
+    good: 0,
+    neutral: 0,
+    bad: 0,
+    totalFeedback: 0
+  })
+
+
+  const onGoodClick = () => {
+    const newStatistics = {
+      ...statistics,
+      good: statistics.good + 1,
+      totalFeedback: statistics.totalFeedback + 1
+    }
+    setStatistics(newStatistics)
+    console.log('Clicked Good ', statistics.good);
+  }
+
+  const onNeutralClick = () => {
+    const newStatistics = {
+      ...statistics,
+      neutral: statistics.neutral + 1,
+      totalFeedback: statistics.totalFeedback + 1
+    }
+    setStatistics(newStatistics)
+    console.log('Clicked Neutral ', statistics.neutral);
+  }
+
+  const onBadClick = () => {
+    const newStatistics = {
+      ...statistics,
+      bad: statistics.bad + 1,
+      totalFeedback: statistics.totalFeedback + 1
+    }
+    setStatistics(newStatistics)
+    console.log('Clicked Bad ', statistics.bad);
+  }
+
+  return (
+    <div className='App'>
+      <div className='App-header'>
+        <h1>Give Feedback</h1>
+        <div className='Feedback-buttons'>
+          <Button handleClick={() => onGoodClick()} text={'good'} />
+          <Button handleClick={() => onNeutralClick()} text={'neutral'} />
+          <Button handleClick={() => onBadClick()} text={'bad'} />
+        </div>
+        <Statistics statistics={statistics} />
+      </div>
     </div>
   )
 }
