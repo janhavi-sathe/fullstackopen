@@ -26,19 +26,19 @@ const Statistics = ({ statistics }) => {
   return (
     <div>
       <h1>Statistics</h1>
-      <Statistic label={'good'} value={good} />
-      <Statistic label={'neutral'} value={neutral} />
-      <Statistic label={'bad'} value={bad} />
-      <Statistic label={'total'} value={totalFeedback} />
-      <Statistic label={'average'} value={average} />
-      <Statistic label={'positive'} value={percPositive} perc={'true'} />
+      {totalFeedback ?
+        <div>
+          <Statistic label={'good'} value={good} />
+          <Statistic label={'neutral'} value={neutral} />
+          <Statistic label={'bad'} value={bad} />
+          <Statistic label={'total'} value={totalFeedback} />
+          <Statistic label={'average'} value={average} />
+          <Statistic label={'positive'} value={percPositive} perc={'true'} />
+        </div>
+        : "No feedback given"}
     </div>
-
-  )
-
-}
-
-
+  );
+};
 
 const App = () => {
   // save clicks of each button to its own state
