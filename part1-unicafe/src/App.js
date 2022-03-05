@@ -7,7 +7,7 @@ const Button = ({ handleClick, text }) => (
   </button>
 )
 
-const Statistic = ({ label, value, perc }) => (
+const StatisticLine = ({ label, value, perc }) => (
   <p>
     {value} {perc ? '%' : ''} {label}
   </p>
@@ -28,17 +28,20 @@ const Statistics = ({ statistics }) => {
       <h1>Statistics</h1>
       {totalFeedback ?
         <div>
-          <Statistic label={'good'} value={good} />
-          <Statistic label={'neutral'} value={neutral} />
-          <Statistic label={'bad'} value={bad} />
-          <Statistic label={'total'} value={totalFeedback} />
-          <Statistic label={'average'} value={average} />
-          <Statistic label={'positive'} value={percPositive} perc={'true'} />
+          <StatisticLine label={'good'} value={good} />
+          <StatisticLine label={'neutral'} value={neutral} />
+          <StatisticLine label={'bad'} value={bad} />
+          <StatisticLine label={'total'} value={totalFeedback} />
+          <StatisticLine label={'average'} value={average} />
+          <StatisticLine label={'positive'} value={percPositive} perc={'true'} />
         </div>
         : "No feedback given"}
+
     </div>
-  );
-};
+
+  )
+
+}
 
 const App = () => {
   // save clicks of each button to its own state
